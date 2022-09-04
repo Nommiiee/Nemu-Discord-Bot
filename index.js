@@ -5,6 +5,7 @@ const { clientID, guildId, token } = require("./config.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
+
 const commandsPath = path.join(__dirname, "/src/commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
@@ -17,6 +18,7 @@ for (const file of commandFiles) {
   // With the key as the command name and the value as the exported module
   client.commands.set(command.data.name, command);
 }
+
 const commands = [];
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
