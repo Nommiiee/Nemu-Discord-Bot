@@ -4,6 +4,17 @@ const { Client, Collection, Intents } = require("discord.js");
 const { clientID, guildId, token } = require("./config.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
+const mongoose = require("mongoose");
+const { mongoPath } = require("./config.json");
+mongoose.connect(
+  mongoPath,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  console.log(`Connected to MongoDB ${mongoPath}`)
+);
+
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, "/src/commands");
