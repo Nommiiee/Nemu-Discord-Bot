@@ -1,50 +1,44 @@
-const qrCode = require("qrcode");
+const QRCode = require("qrcode");
 const Canvas = require("@napi-rs/canvas");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("qrcode")
+    .setName("create_qr")
     .setDescription("Generate a QR Code")
     .addStringOption((option) =>
       option
         .setName("text")
-        .setDescription("The text to generate a QR Code for")
+        .setDescription("Text to generate QR Code")
+        .setRequired(true)
     ),
   async execute(interaction) {
     const text = interaction.options.getString("text");
     if (text) {
-      await generateQR(text).then((image) => {
-        interaction.reply({ files: [image] });
+      const image = await generateQR(text);
+      await interaction.reply({
+        content: "Here's your QR Code",
+        files: [image],
       });
     } else {
-      await interaction.reply("No Text Provided");
+      await interaction.reply(
+        "You didn't add any text to generate a QR Code for ;-;"
+      );
     }
   },
 };
 
 async function generateQR(text) {
-  const canvas = Canvas.createCanvas(700, 250);
-  const context = canvas.getContext("2d");
-  if (text) {
-    return qrCode.toDataURL(text, async function (err, url) {
-      if (err) {
-        return "Some error occured";
-      }
-      context.drawImage(url, 0, 0, 700, 250);
-      const qrImage = new AttachmentBuilder(await canvas.encode("png"), {
-        name: "QRCODE.png",
-      });
-      return qrImage;
-    });
-    return qr;
-  } else {
-    return qrCode.toDataURL("Hello World", async function (err, url) {
-      context.drawImage(url, 0, 0, 700, 250);
-      const qrImage = new AttachmentBuilder(await canvas.encode("png"), {
-        name: "QRCODE.png",
-      });
-      return qrImage;
-    });
+  try {
+    const canvas = Canvas.createCanvas(200, 200);
+    const ctx = canvas.getContext("2d");
+    if (text) {
+      const qr = await QRCode.toDataURL(text, { errorCorrectionLevel: "H" });
+      const image = await Canvas.loadImage(qr);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas.toBuffer();
+    }
+  } catch (err) {
+    console.log(err);
   }
 }

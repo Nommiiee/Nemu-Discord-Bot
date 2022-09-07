@@ -3,9 +3,10 @@ const path = require("node:path");
 const { Client, Collection, Intents } = require("discord.js");
 const { clientID, guildId, token } = require("./config.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
 const mongoose = require("mongoose");
 const { mongoPath } = require("./config.json");
+const { disconnect } = require("node:process");
+
 async function initializeDB() {
   await mongoose.connect(mongoPath, {
     useNewUrlParser: true,
@@ -64,6 +65,10 @@ client.on("interactionCreate", async (interaction) => {
       ephemeral: true,
     });
   }
+});
+
+process.on("uncaughtException", (err) => {
+  console.log(err);
 });
 
 client.login(token);

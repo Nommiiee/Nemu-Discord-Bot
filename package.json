@@ -26,9 +26,12 @@
     "discord-api-types": "^0.34.0",
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.2",
+    "jimp": "^0.16.1",
     "mongoose": "^6.5.4",
     "nodemon": "^2.0.19",
-    "qrcode": "^1.5.1"
+    "puppeteer": "^17.1.2",
+    "qrcode": "^1.5.1",
+    "qrcode-reader": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^8.18.0"

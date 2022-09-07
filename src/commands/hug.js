@@ -6,10 +6,11 @@ module.exports = {
     .setName("hug")
     .setDescription("Hug someone")
     .addUserOption((option) =>
-      option.setName("user").setDescription("The user to hug")
+      option.setName("target").setDescription("user to hug")
     ),
+
   async execute(interaction) {
-    const user = interaction.options.getUser("user");
+    const user = interaction.options.getUser("target");
     console.log(user);
     await interaction.reply(await hug(user));
   },
