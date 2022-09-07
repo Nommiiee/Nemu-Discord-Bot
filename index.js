@@ -6,14 +6,21 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const mongoose = require("mongoose");
 const { mongoPath } = require("./config.json");
-mongoose.connect(
-  mongoPath,
-  {
+async function initializeDB() {
+  await mongoose.connect(mongoPath, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  },
-  console.log(`Connected to MongoDB ${mongoPath}`)
-);
+  });
+}
+
+// Initialising the DB
+initializeDB()
+  .then(() => {
+    console.log(`Connected to MongoDB ${mongoPath}`);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 client.commands = new Collection();
 
