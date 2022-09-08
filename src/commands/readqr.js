@@ -16,9 +16,15 @@ module.exports = {
     const qr = interaction.options.getAttachment("qr");
     if (qr) {
       await readQr(qr).then((text) => {
-        interaction.reply({
-          content: `QR Code says: ${text}`,
-        });
+        interaction
+          .reply({
+            content: `QR Code says: ${text}`,
+          })
+          .catch((err) => {
+            interaction.reply({
+              content: `Error Reading QR Code`,
+            });
+          });
       });
     } else {
       await interaction.reply("This command is not yet implemented.");
@@ -26,10 +32,8 @@ module.exports = {
   },
 };
 
-// Language: javascript
-// save image locally from qr
 async function readQr(qr) {
-  const canvas = Canvas.createCanvas(200, 200);
+  const canvas = Canvas.createCanvas(800, 800);
   const ctx = canvas.getContext("2d");
   const image = await Canvas.loadImage(qr.url);
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
@@ -37,21 +41,19 @@ async function readQr(qr) {
 
   //save the image to a file
   const buffer = canvas.toBuffer("image/png");
-  await jimp
-    .read(buffer, (err, image) => {
-      if (err) throw err;
+
+  const text = await new Promise((resolve, reject) => {
+    jimp.read(buffer, (err, image) => {
       const reader = new QrCodeReader();
       reader.callback = (err, value) => {
         if (err) {
-          return console.log(err);
+          reject(err);
         } else {
-          return value.result;
+          resolve(value.result);
         }
       };
       reader.decode(image.bitmap);
-    })
-    .then((value) => {
-      console.log(value);
-      return "test";
     });
+  });
+  return text;
 }

@@ -23,6 +23,7 @@
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
     "@napi-rs/canvas": "^0.1.29",
+    "body-parser": "^1.20.0",
     "discord-api-types": "^0.34.0",
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.2",
@@ -31,7 +32,8 @@
     "nodemon": "^2.0.19",
     "puppeteer": "^17.1.2",
     "qrcode": "^1.5.1",
-    "qrcode-reader": "^1.0.4"
+    "qrcode-reader": "^1.0.4",
+    "ytdl-core": "^4.11.2"
   },
   "devDependencies": {
     "eslint": "^8.18.0"

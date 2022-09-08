@@ -5,12 +5,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("hug")
     .setDescription("Hug someone")
-    .addUserOption((option) =>
+    .addMentionableOption((option) =>
       option.setName("target").setDescription("user to hug")
     ),
 
   async execute(interaction) {
-    const user = interaction.options.getUser("target");
+    const user = interaction.options.getMentionable("target");
     console.log(user);
     await interaction.reply(await hug(user));
   },
@@ -19,7 +19,7 @@ module.exports = {
 // Language: javascript
 async function hug(user) {
   if (user) {
-    return `https://tenor.com/view/hug-anime-cute-love-gif-15716891`;
+    return `You hugged ${user}`;
   } else {
     return "You didn't add any user to hug ;-;";
   }

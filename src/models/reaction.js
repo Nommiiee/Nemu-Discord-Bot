@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 
 const reactionSchema = new mongoose.Schema({
   user: {
-    reactionType: String,
-    reactionReply: String,
+    type: String,
+    required: true,
+    reply: String,
   },
   notUser: {
-    reactionType: String,
-    reactionReply: String,
+    type: String,
+    required: true,
+    reply: String,
   },
 });
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form To Add Reaction</title>
+</head>
+
+<body>
+
+    <div>
+        <form action="https://localhost:3000" method="post">
+            <label for="name">Name</label>
+            <select name="name" id="nameOption">
+                <option value="hug">
+                    Hug
+                </option>
+                <option value="Kick">
+                    Kick
+                </option>
+                <option value="Punch">
+                    Punch
+                </option>
+                <option value="cuddle">
+                    Cuddle
+                </option>
+                <option value="cry">
+                    Cry
+                </option>
+                <option value="tease">
+                    Tease
+                </option>
+            </select>
+            <label for="reaction">Reaction</label>
+            <input type="text" name="reaction" id="reaction">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

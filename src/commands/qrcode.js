@@ -30,10 +30,10 @@ module.exports = {
 
 async function generateQR(text) {
   try {
-    const canvas = Canvas.createCanvas(200, 200);
+    const canvas = Canvas.createCanvas(700, 700);
     const ctx = canvas.getContext("2d");
     if (text) {
-      const qr = await QRCode.toDataURL(text, { errorCorrectionLevel: "H" });
+      const qr = await QRCode.toDataURL(text, { errorCorrectionLevel: "M" });
       const image = await Canvas.loadImage(qr);
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       return canvas.toBuffer();
