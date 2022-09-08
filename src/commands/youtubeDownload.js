@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { execute } = require("./addResposnse");
 const ytdl = require("ytdl-core");
 const fs = require("fs");
-const { json } = require("body-parser");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,17 +13,36 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    await interaction.reply("Pong!");
+    const url = interaction.options.getString("url");
+    download(url).then((data) => {
+      interaction.reply({
+        embeds: [
+          {
+            color: "#FF0000",
+            author: {
+              name: "Download URL Created",
+            },
+            title: data.title,
+            url: data.url,
+            image: {
+              url: data.thumbnail,
+            },
+            timestamp: new Date(),
+          },
+        ],
+      });
+    });
   },
 };
 
-async function download(url, path) {
+async function download(url) {
   const info = await ytdl.getInfo(url);
-  return info;
+  fs.writeFileSync("./datahehe.json", JSON.stringify(info));
+  const downloadurl = info.formats[info.formats.length - 1].url;
+  return {
+    url: downloadurl,
+    title: info.videoDetails.title,
+    thumbnail:
+      info.videoDetails.thumbnails[info.videoDetails.thumbnails.length - 1].url,
+  };
 }
-
-console.log(
-  download("https://www.youtube.com/watch?v=_b67SC7Y4qA", null)
-    .then((res) => fs.writeFileSync("test.json", JSON.stringify(res)))
-    .then(() => console.log("done"))
-);

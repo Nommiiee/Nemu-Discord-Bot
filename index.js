@@ -1,14 +1,14 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, Intents } = require("discord.js");
-const { clientID, guildId, token } = require("./config.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const mongoose = require("mongoose");
 const { mongoPath } = require("./config.json");
 const { disconnect } = require("node:process");
+require("dotenv").config();
 
 async function initializeDB() {
-  await mongoose.connect(mongoPath, {
+  await mongoose.connect(process.env.mongoPath, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -71,7 +71,7 @@ process.on("uncaughtException", (err) => {
   console.log(err);
 });
 
-client.login(token);
+client.login(process.env.token);
 
 // const express = require("express");
 // const app = express();
