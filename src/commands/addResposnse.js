@@ -35,7 +35,6 @@ module.exports = {
 };
 
 // Language: javascript
-
 async function addResponse(command, response) {
   if (command && response) {
     new reactionModel({

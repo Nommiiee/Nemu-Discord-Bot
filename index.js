@@ -6,8 +6,10 @@ const mongoose = require("mongoose");
 const { disconnect } = require("node:process");
 require("dotenv").config();
 
+const localDB = "mongodb://127.0.0.1:27017/Nemu-The-Bot";
+
 async function initializeDB() {
-  await mongoose.connect(process.env.mongoPath, {
+  await mongoose.connect(localDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -71,13 +73,3 @@ process.on("uncaughtException", (err) => {
 });
 
 client.login(process.env.token);
-
-// const express = require("express");
-// const app = express();
-// const port = 3000;
-// const bodyParser = require("body-parser");
-// app.use(bodyParser.json());
-
-// app.listen(port, () => {
-//   console.log(`Listening at http://localhost:${port}`);
-// });
