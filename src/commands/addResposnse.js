@@ -25,30 +25,21 @@ module.exports = {
         .setName("usercheck")
         .setDescription("Does the response have a user?")
         .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option.setName("text").setDescription("The response that you want to add")
     ),
   async execute(interaction) {
-    const command = interaction.options.getString("response");
+    const response = interaction.options.getString("response");
     const user = interaction.options.getBoolean("usercheck");
+    const text = interaction.options.getString("text");
     console.log(command);
-    await interaction.reply(await addResponse(command, response));
+    await interaction.reply(await addResponse(response, user, text));
   },
 };
 
 // Language: javascript
-async function addResponse(command, response) {
-  if (command && response) {
-    new reactionModel({
-      type: command,
-      reply: response,
-    })
-      .save()
-      .then((result) => {
-        return `You added the response ${response} to the command ${command}`;
-      })
-      .catch((err) => {
-        return `Error In Saving Response`;
-      });
-  } else {
-    return "You didn't add a command or a response ;-;";
-  }
+async function addResponse(response, user, text) {
+  console.log(response, user, text);
+  return response, user, text;
 }

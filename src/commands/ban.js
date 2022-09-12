@@ -1,0 +1,21 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { execute } = require("./addResposnse");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("ban")
+    .setDescription("Ban a user")
+    .addUserOption((option) =>
+      option.setName("target").setDescription("user to ban").setRequired(true)
+    ),
+  async execute(interaction) {
+    const user = interaction.options.getUser("target");
+    if (user) {
+      const member = interaction.guild.members.cache.get(user.id);
+      member.ban();
+      await interaction.reply(`${user} has been banned`);
+    } else {
+      await interaction.reply("You didn't add any user to ban ;-;");
+    }
+  },
+};

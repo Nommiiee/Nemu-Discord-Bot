@@ -17,7 +17,7 @@ module.exports = {
       option
         .setName("message")
         .setDescription("message to spam")
-        .setRequired(false)
+        .setRequired(true)
     ),
   async execute(interaction) {
     const user = interaction.options.getMentionable("target");
@@ -26,7 +26,7 @@ module.exports = {
     console.log(user, message);
 
     await interaction.reply(await spam(user, message));
-    if (number < 20) {
+    if (number < 21) {
       for (let i = 0; i < number - 1; i++) {
         await interaction.followUp(await spam(user, message));
       }

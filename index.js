@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Collection, Intents } = require("discord.js");
+const { ActivityType, Client, Collection, Intents } = require("discord.js");
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const mongoose = require("mongoose");
 const { disconnect } = require("node:process");
@@ -9,7 +10,7 @@ require("dotenv").config();
 const localDB = "mongodb://127.0.0.1:27017/Nemu-The-Bot";
 
 async function initializeDB() {
-  await mongoose.connect(localDB, {
+  mongoose.connect(localDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -18,7 +19,7 @@ async function initializeDB() {
 // Initialising the DB
 initializeDB()
   .then(() => {
-    console.log(`Connected to MongoDB ${mongoPath}`);
+    console.log(`Connected to MongoDB ${localDB}`);
   })
   .catch((err) => {
     console.log(err);
@@ -72,4 +73,12 @@ process.on("uncaughtException", (err) => {
   console.log(err);
 });
 
-client.login(process.env.token);
+client.login(process.env.token).then(() => {
+  client.user
+    .setAvatar(
+      "https://e7.pngegg.com/pngimages/734/417/png-clipart-yuno-gasai-yandere-simulator-future-diary-anime-anime-love-mammal-thumbnail.png"
+    )
+    .then(() => {
+      client.user.setActivity("You Darling", { type: "WATCHING" });
+    });
+});
