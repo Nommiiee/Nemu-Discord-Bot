@@ -10,12 +10,17 @@ module.exports = {
     ),
   async execute(interaction) {
     const user = interaction.options.getUser("target");
-    if (user) {
-      const member = interaction.guild.members.cache.get(user.id);
-      member.roles.add()
-      await interaction.reply(`${user} has been muted`);
-    } else {
-      await interaction.reply("You didn't add any user to mute ;-;");
+    //check in interaction user has permission to mute
+    if (interaction.member.permissions.has("MUTE_MEMBERS")) {
+      if (user) {
+        const member = interaction.guild.members.cache.get(user.id);
+        member.roles.add();
+        await interaction.reply(`${user} has been muted`);
+      } else {
+        await interaction.reply("You didn't add any user to mute ;-;");
+      }
+    } else {    
+      await interaction.reply("Sorry you don't have the perms for it");
     }
   },
 };

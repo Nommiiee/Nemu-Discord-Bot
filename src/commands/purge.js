@@ -13,15 +13,25 @@ module.exports = {
     ),
   async execute(interaction) {
     const amount = interaction.options.getInteger("amount") || 1;
-    if (amount < 101) {
-      await interaction.channel.bulkDelete(amount, true).catch((err) => {
-        console.error(err);
-        interaction.reply(
-          "There was an error trying to purge messages in this channel!"
-        );
-      });
+    //check in interaction user has permission to purge
+    if (interaction.member.permissions.has("MANAGE_MESSAGES")) {
+      if (amount < 101) {
+        await interaction.channel
+          .bulkDelete(amount, true)
+          .catch((err) => {
+            console.error(err);
+            interaction.reply(
+              "There was an error trying to purge messages in this channel!"
+            );
+          })
+          .then(() => {
+            interaction.reply(`Successfully deleted ${amount} messages`);
+          });
+      } else {
+        await interaction.reply("Please enter a number between 0 and 100");
+      }
     } else {
-      await interaction.reply("Please enter a number between 0 and 100");
+      await interaction.reply("Sorry you don't have the perms for it");
     }
   },
 };

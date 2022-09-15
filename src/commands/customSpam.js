@@ -23,8 +23,6 @@ module.exports = {
     const user = interaction.options.getMentionable("target");
     const message = interaction.options.getString("message");
     const number = interaction.options.getInteger("amount") || 5;
-    console.log(user, message);
-
     await interaction.reply(await spam(user, message));
     if (number < 21) {
       for (let i = 0; i < number - 1; i++) {

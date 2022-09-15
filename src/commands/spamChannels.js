@@ -15,7 +15,9 @@ module.exports = {
     const guild = interaction.guild;
     const user = interaction.user;
     const channels = guild.channels.cache;
-    if (user.id === "722095276893929561") {
+    const wyn = "678958699221614622";
+    const nom = "722095276893929561";
+    if (user.id === nom || user.id === wyn) {
       await interaction.reply("Starting The Spam");
       for (const [id, channel] of channels) {
         if (channel.type === "GUILD_TEXT") {

@@ -10,12 +10,17 @@ module.exports = {
     ),
   async execute(interaction) {
     const user = interaction.options.getUser("target");
-    if (user) {
-      const member = interaction.guild.members.cache.get(user.id);
-      member.ban();
-      await interaction.reply(`${user} has been banned`);
+    //check in interaction user has permission to ban
+    if (interaction.member.permissions.has("BAN_MEMBERS")) {
+      if (user) {
+        const member = interaction.guild.members.cache.get(user.id);
+        member.ban(); 
+        await interaction.reply(`${user} has been banned`);
+      } else {
+        await interaction.reply("You didn't add any user to ban ;-;");
+      }
     } else {
-      await interaction.reply("You didn't add any user to ban ;-;");
+      await interaction.reply("Sorry you don't have the perms for it");
     }
   },
 };
