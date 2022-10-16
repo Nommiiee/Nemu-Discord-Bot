@@ -51,34 +51,49 @@ module.exports = {
 };
 
 async function dogFact() {
-  if (err) return `Error: ${err}`;
-  return fetch("http://dog-api.kinduff.com/api/facts", { method: "GET" })
-    .then((res) => res.json())
-    .then((json) => json.facts[0].toString());
+  try {
+    return fetch("http://dog-api.kinduff.com/api/facts", { method: "GET" })
+      .then((res) => res.json())
+      .then((json) => json.facts[0].toString());
+  } catch (error) {
+    console.log(error);
+    return "Error in fetching dog fact";
+  }
 }
 
 async function catFact() {
-  if (err) return `Error: ${err}`;
-
-  return fetch("https://catfact.ninja/fact", { method: "GET" })
-    .then((res) => res.json())
-    .then((json) => json.fact);
+  try {
+    return fetch("https://catfact.ninja/fact", { method: "GET" })
+      .then((res) => res.json())
+      .then((json) => json.fact);
+  } catch (error) {
+    console.log(error);
+    return "Error in fetching cat fact";
+  }
 }
 
 async function norrisFact() {
-  if (err) return `Error: ${err}`;
-  return fetch("https://api.chucknorris.io/jokes/random", { method: "GET" })
-    .then((response) => response.json())
-    .then((data) => {
-      return data.value;
-    });
+  try {
+    return fetch("https://api.chucknorris.io/jokes/random", { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => {
+        return data.value;
+      });
+  } catch (error) {
+    console.log(error);
+    return "Error in fetching norris fact";
+  }
 }
 
 async function randomFact() {
-  if (err) return `Error: ${err}`;
-  return fetch("https://uselessfacts.jsph.pl/random.json?language=en", {
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((json) => json.text);
+  try {
+    return fetch("https://uselessfacts.jsph.pl/random.json?language=en", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((json) => json.text);
+  } catch (error) {
+    console.log(error);
+    return "Error in fetching random fact";
+  }
 }

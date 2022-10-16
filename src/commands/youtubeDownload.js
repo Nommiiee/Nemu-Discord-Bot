@@ -13,9 +13,10 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    await interaction.deferReply();
     const url = interaction.options.getString("url");
     download(url).then((data) => {
-      interaction.reply({
+      interaction.editReply({
         embeds: [
           {
             color: "#FF0000",
@@ -37,7 +38,6 @@ module.exports = {
 
 async function download(url) {
   const info = await ytdl.getInfo(url);
-  fs.writeFileSync("./datahehe.json", JSON.stringify(info));
   const downloadurl = info.formats[info.formats.length - 1].url;
   return {
     url: downloadurl,
