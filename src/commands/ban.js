@@ -14,7 +14,7 @@ module.exports = {
     if (interaction.member.permissions.has("BAN_MEMBERS")) {
       if (user) {
         const member = interaction.guild.members.cache.get(user.id);
-        member.ban(); 
+        member.ban();
         await interaction.reply(`${user} has been banned`);
       } else {
         await interaction.reply("You didn't add any user to ban ;-;");

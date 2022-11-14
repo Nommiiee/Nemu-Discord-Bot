@@ -8,7 +8,7 @@ module.exports = {
     .setName("shutdown")
     .setDescription("Shutdown The Bot"),
   async execute(interaction) {
-    await interaction.reply("hehe fake command");
+    await interaction.reply("hehe! fake command cunts");
     // client.destroy();
   },
 };

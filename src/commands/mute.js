@@ -19,7 +19,7 @@ module.exports = {
       } else {
         await interaction.reply("You didn't add any user to mute ;-;");
       }
-    } else {    
+    } else {
       await interaction.reply("Sorry you don't have the perms for it");
     }
   },
