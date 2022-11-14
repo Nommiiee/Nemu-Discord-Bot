@@ -3,7 +3,6 @@ const Canvas = require("@napi-rs/canvas");
 const fs = require("node:fs");
 const jimp = require("jimp");
 const QrCodeReader = require("qrcode-reader");
-const { createReadStream } = require("node:fs");
 
 module.exports = {
   data: new SlashCommandBuilder()
