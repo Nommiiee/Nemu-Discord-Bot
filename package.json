@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon infex.js",
+    "start": "node index.js",
+    "commands": "node commands.js"
   },
   "repository": {
     "type": "git",
@@ -26,8 +28,10 @@
     "mongoose": "^6.7.2",
     "node-fetch": "^3.3.0",
     "node-fetch-commonjs": "^3.2.4",
+    "nodemon": "^2.0.20",
     "qrcode": "^1.5.1",
     "qrcode-reader": "^1.0.4",
     "ytdl-core": "^4.11.2"
-  }
+  },
+  "engines": { "node": "16.14.2" }
 }
