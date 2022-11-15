@@ -6,13 +6,14 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 async function initialize() {
-  await mongoose.connect(process.env.mongoPath, {
+  mongoose.connect(process.env.mongoPath || process.env.mongoOnlinePath, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 }
 
 initialize();
+
 client.commands = new Collection();
 
 client.once("ready", () => {
