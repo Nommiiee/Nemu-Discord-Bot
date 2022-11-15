@@ -12,7 +12,7 @@ async function initialize() {
   });
 }
 
-initialize();
+// initialize();
 client.commands = new Collection();
 
 client.once("ready", () => {
