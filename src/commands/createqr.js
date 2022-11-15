@@ -14,9 +14,10 @@ module.exports = {
     ),
   async execute(interaction) {
     const text = interaction.options.getString("text");
+    await interaction.deferReply();
     if (text) {
       const image = await generateQR(text);
-      await interaction.reply({
+      await interaction.editReply({
         content: "Here's your QR Code",
         files: [image],
       });

@@ -2,17 +2,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const path = require("path");
 const fs = require("fs");
-const mongoose = require("mongoose");
 require("dotenv").config();
-
-async function initialize() {
-  mongoose.connect(process.env.mongoPath || process.env.mongoOnlinePath, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-}
-
-initialize();
 
 client.commands = new Collection();
 

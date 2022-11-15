@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const Canvas = require("@napi-rs/canvas");
-const fs = require("node:fs");
 const jimp = require("jimp");
 const QrCodeReader = require("qrcode-reader");
 
@@ -13,20 +12,21 @@ module.exports = {
     ),
   async execute(interaction) {
     const qr = interaction.options.getAttachment("qr");
+    await interaction.deferReply();
     if (qr) {
       await readQr(qr).then((text) => {
         interaction
-          .reply({
+          .editReply({
             content: `QR Code says: ${text}`,
           })
           .catch((err) => {
-            interaction.reply({
+            interaction.editReply({
               content: `Error Reading QR Code`,
             });
           });
       });
     } else {
-      await interaction.reply("This command is not yet implemented.");
+      await interaction.editReply("This command is not yet implemented.");
     }
   },
 };

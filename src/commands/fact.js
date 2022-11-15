@@ -1,8 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-
-// import node-fetch from node-fetch
-// const fetch = require("node-fetch");
-
 require("node-fetch-commonjs");
 
 module.exports = {
@@ -36,20 +32,22 @@ module.exports = {
   async execute(interaction) {
     let fact;
     const factType = interaction.options.getString("fact_type");
+    await interaction.deferReply();
+
     if (factType === "random fact") {
       fact = await randomFact();
-      await interaction.reply(`Random Fact : ${fact}`);
+      await interaction.editReply(`Random Fact : ${fact}`);
     } else if (factType === "dog fact") {
       fact = await dogFact();
-      await interaction.reply(`Dog Fact : ${fact}`);
+      await interaction.editReply(`Dog Fact : ${fact}`);
     } else if (factType === "cat fact") {
       fact = await catFact();
-      await interaction.reply(`Cat Fact : ${fact}`);
+      await interaction.editReply(`Cat Fact : ${fact}`);
     } else if (factType === "norris fact") {
       fact = await norrisFact();
-      await interaction.reply(`Norris Fact : ${fact}`);
+      await interaction.editReply(`Norris Fact : ${fact}`);
     } else {
-      await interaction.reply("Please enter a valid fact type");
+      await interaction.editReply("Please enter a valid fact type");
     }
   },
 };
@@ -58,7 +56,13 @@ async function dogFact() {
   try {
     return fetch("http://dog-api.kinduff.com/api/facts", { method: "GET" })
       .then((res) => res.json())
-      .then((json) => json.facts[0].toString());
+      .then((json) => {
+        if (json.success) {
+          return json.facts[0];
+        } else {
+          return "Error in fetching dog fact";
+        }
+      });
   } catch (error) {
     console.log(error);
     return "Error in fetching dog fact";
@@ -69,7 +73,13 @@ async function catFact() {
   try {
     return fetch("https://catfact.ninja/fact", { method: "GET" })
       .then((res) => res.json())
-      .then((json) => json.fact);
+      .then((json) => {
+        if (json.fact) {
+          return json.fact;
+        } else {
+          return "Error in fetching cat fact";
+        }
+      });
   } catch (error) {
     console.log(error);
     return "Error in fetching cat fact";
@@ -95,7 +105,13 @@ async function randomFact() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((json) => json.text);
+      .then((json) => {
+        if (json.text) {
+          return json.text;
+        } else {
+          return "Error in fetching random fact";
+        }
+      });
   } catch (error) {
     console.log(error);
     return "Error in fetching random fact";
