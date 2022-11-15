@@ -33,5 +33,7 @@
     "qrcode-reader": "^1.0.4",
     "ytdl-core": "^4.11.2"
   },
-  "engines": { "node": "16.14.2" }
+  "engines": {
+    "node": "16.14.2"
+  }
 }
