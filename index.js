@@ -3,7 +3,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const path = require("path");
 const fs = require("fs");
 require("dotenv").config();
-
+// test Deploy
 client.commands = new Collection();
 
 client.once("ready", () => {
