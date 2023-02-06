@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon infex.js",
+    "test": "nodemon index.js",
     "start": "node index.js",
     "commands": "node commands.js"
   },

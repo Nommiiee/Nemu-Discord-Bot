@@ -6,12 +6,12 @@ module.exports = {
     .setDescription("Spam different/all channel")
     .addStringOption((option) =>
       option
-        .setName("your_message")
+        .setName("message")
         .setDescription("message to spam")
         .setRequired(true)
     ),
   async execute(interaction) {
-    const message = interaction.options.getString("your_message");
+    const message = interaction.options.getString("message");
     const guild = interaction.guild;
     const user = interaction.user;
     const channels = guild.channels.cache;
@@ -20,8 +20,9 @@ module.exports = {
     if (user.id === nom || user.id === wyn) {
       await interaction.reply("Starting The Spam");
       for (const [id, channel] of channels) {
-        if (channel.type === "GUILD_TEXT") {
-          await channel.send(`${message}`);
+        if (channel.type === 0) {
+          console.log(`Spamming ${channel.name}`);
+          await channel.send(message);
         }
       }
     } else {
