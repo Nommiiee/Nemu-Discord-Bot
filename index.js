@@ -13,7 +13,8 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Nemu is online!");
+  const fileToSent = `src/commands/readqr.js`;
+  res.sendFile(fileToSent, { root: __dirname });
 });
 
 // test Deploy
@@ -40,6 +41,7 @@ for (const file of commandFiles) {
   const command = require(filePath);
   commands.push(command.data.toJSON());
 }
+
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;

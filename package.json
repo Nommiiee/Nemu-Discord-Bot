@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodemon index.js",
     "start": "node index.js",
-    "commands": "node commands.js"
+    "load": "node commands.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Nommiiee/Nemu-Discord-Bot#readme",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.30",
+    "canvas": "^2.11.2",
     "discord": "^0.8.2",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
@@ -30,8 +31,9 @@
     "node-fetch": "^3.3.0",
     "node-fetch-commonjs": "^3.2.4",
     "nodemon": "^2.0.20",
-    "qrcode": "^1.5.1",
+    "qrcode": "^1.5.3",
     "qrcode-reader": "^1.0.4",
+    "r34.api": "^1.6.0",
     "ytdl-core": "^4.11.2"
   },
   "engines": {

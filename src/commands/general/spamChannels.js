@@ -23,6 +23,7 @@ module.exports = {
         if (channel.type === 0) {
           console.log(`Spamming ${channel.name}`);
           await channel.send(message);
+        
         }
       }
     } else {

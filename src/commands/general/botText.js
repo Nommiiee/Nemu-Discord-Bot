@@ -12,8 +12,9 @@ module.exports = {
     ),
   async execute(interaction) {
     const message = interaction.options.getString("message");
+    console.log(interaction.user.roles);
     if (
-      interaction.user.roles.cache.some((role) => role.name === "Staff") ||
+      interaction.user.roles.some((role) => role.name === "Staff") ||
       interaction.user.id === "722095276893929561"
     ) {
       await interaction.reply(`${message} role:`);
