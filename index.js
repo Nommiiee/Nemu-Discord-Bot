@@ -2,20 +2,8 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const path = require("path");
 const fs = require("fs");
+const { loadAllCommands, allCommands } = require("./src/helper/loadCommand.js");
 require("dotenv").config();
-
-// const express = require("express");
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-
-app.get("/", (req, res) => {
-  const fileToSent = `src/commands/readqr.js`;
-  res.sendFile(fileToSent, { root: __dirname });
-});
 
 // test Deploy
 client.commands = new Collection();
@@ -23,28 +11,15 @@ client.commands = new Collection();
 const token = process.env.token;
 const clientId = process.env.clientId;
 
+loadAllCommands(path.join(__dirname, "/src/commands"));
+
+allCommands.forEach((item) => {
+  client.commands.set(item.data.name, item);
+});
+
 client.once("ready", () => {
   console.log("I am ready darling!");
 });
-
-const commandsPath = path.join(__dirname, "/src/commands");
-const commandFiles = fs
-  .readdirSync(commandsPath)
-  .filter((file) => file.endsWith(".js"));
-
-for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
-  const command = require(filePath);
-  client.commands.set(command.data.name, command);
-}
-
-const commands = [];
-for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
-  const command = require(filePath);
-  commands.push(command.data.toJSON());
-}
-
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
