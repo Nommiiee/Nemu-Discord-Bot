@@ -11,7 +11,15 @@ client.commands = new Collection();
 const token = process.env.token;
 const clientId = process.env.clientId;
 
-loadAllCommands(path.join(__dirname, "/src/commands"));
+/*
+
+loadAllCommands loads all the command into the bot at the run time
+first argument is the path to the commands folder in the src folder
+the second argument is a boolean that tells the function whether
+it's is being used for loading commands or registering commands
+
+*/
+loadAllCommands("../commands", false);
 
 allCommands.forEach((item) => {
   client.commands.set(item.data.name, item);

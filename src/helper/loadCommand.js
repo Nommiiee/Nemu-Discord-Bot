@@ -3,49 +3,32 @@ const fs = require("fs");
 const allCommands = [];
 
 // Helper Functions For Command Loading
-function loadAllCommands(directoryPath) {
-  const commandFiles = fs.readdirSync(directoryPath);
+function loadAllCommands(directoryPath, loadingCommand) {
+  const commandPath = path.join(__dirname, directoryPath);
+
+  const commandFiles = fs.readdirSync(commandPath);
 
   commandFiles.forEach((item) => {
-    const filePath = path.join(directoryPath, item);
+    const filePath = path.join(commandPath, item);
     const stats = fs.statSync(filePath);
 
     if (stats.isDirectory()) {
-      loadAllCommands(filePath);
+      loadAllCommands(`./${directoryPath}/${item}`, loadingCommand);
     } else {
-      const command = require(filePath);
-      allCommands.push(command);
+      const newCommand = require(filePath);
+      if (loadingCommand) {
+        allCommands.push(newCommand.data.toJSON());
+      } else {
+        allCommands.push(newCommand);
+      }
     }
   });
 
   console.log(`Loaded ${commandFiles.length} commands`);
 }
 
-// Helper Functions
-function loadCommand(pathToCommand) {
-  const commandPath = path.join(__dirname, pathToCommand);
-  const commandFiles = fs.readdirSync(commandPath);
-
-  for (const file of commandFiles) {
-    const filePath = path.join(commandPath, file);
-    const newCommand = require(filePath);
-    allCommands.push(newCommand.data.toJSON());
-  }
-  console.log(`Loaded ${commandFiles.length} commands from ${pathToCommand}`);
-}
-
-function loadPath(arr) {
-  if (!arr) return console.log("No path provided");
-  if (!Array.isArray(arr)) return console.log("Path is not an array");
-  if (arr.length === 0) return console.log("Array is empty");
-  arr.forEach((item) => {
-    loadCommand(item);
-  });
-}
-
 module.exports = {
   loadAllCommands,
-  loadCommand,
-  loadPath,
+
   allCommands,
 };
