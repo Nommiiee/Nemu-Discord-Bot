@@ -12,9 +12,10 @@ require("dotenv").config();
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
-// app.get("/", (req, res) => {
-//   res.send("Nemu is online!");
-// });
+app.get("/", (req, res) => {
+  const fileToSent = `src/commands/readqr.js`;
+  res.sendFile(fileToSent, { root: __dirname });
+});
 
 // test Deploy
 client.commands = new Collection();
@@ -43,6 +44,7 @@ for (const file of commandFiles) {
   const command = require(filePath);
   commands.push(command.data.toJSON());
 }
+
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;

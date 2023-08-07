@@ -1,6 +1,8 @@
-const QRCode = require("qrcode");
-const Canvas = require("@napi-rs/canvas");
+// Discord Command Handler
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { createCanvas, loadImage } = require("canvas");
+const { Image } = require("canvas");
+const QRCode = require("qrcode");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,11 +33,11 @@ module.exports = {
 
 async function generateQR(text) {
   try {
-    const canvas = Canvas.createCanvas(700, 700);
+    const canvas = createCanvas(700, 700);
     const ctx = canvas.getContext("2d");
     if (text) {
       const qr = await QRCode.toDataURL(text, { errorCorrectionLevel: "M" });
-      const image = await Canvas.loadImage(qr);
+      const image = await loadImage(qr);
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       return canvas.toBuffer();
     }
