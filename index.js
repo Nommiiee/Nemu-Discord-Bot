@@ -4,20 +4,23 @@ const path = require("path");
 const fs = require("fs");
 require("dotenv").config();
 
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3000;
+// const express = require("express");
+// const app = express();
+// const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
-app.get("/", (req, res) => {
-  res.send("Nemu is online!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Nemu is online!");
+// });
 
 // test Deploy
 client.commands = new Collection();
+
+const token = process.env.token;
+const clientId = process.env.clientId;
 
 client.once("ready", () => {
   console.log("I am ready darling!");
@@ -65,6 +68,6 @@ process.on("unhandledRejection", (err) => {
   console.log(err);
 });
 
-client.login(process.env.token).then(() => {
+client.login(token).then(() => {
   client.user.setActivity("You Darling", { type: "WATCHING" });
 });

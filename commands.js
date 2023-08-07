@@ -9,15 +9,18 @@ const allCommands = [];
 const commandsPath = path.join(__dirname, "/src/commands");
 const commandFiles = fs.readdirSync(commandsPath);
 
+const token = process.env.token;
+const clientId = process.env.clientId;
+
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
   allCommands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: "10" }).setToken(process.env.token);
+const rest = new REST({ version: "10" }).setToken(token);
 rest
-  .put(Routes.applicationCommands(process.env.clientId), {
+  .put(Routes.applicationCommands(clientId), {
     body: allCommands,
   })
   .then(() => console.log("Successfully registered application commands."))

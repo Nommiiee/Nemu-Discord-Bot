@@ -12,26 +12,35 @@ module.exports = {
         .setName("amount")
         .setDescription("amount of times to spam")
         .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("message")
+        .setDescription("message to spam")
+        .setRequired(true)
     ),
   async execute(interaction) {
     const user = interaction.options.getUser("target");
     const number = interaction.options.getInteger("amount") || 1;
-    console.log(number);
-    await interaction.reply(await spam(user));
-    if (number < 21) {
+    const spamMessage = interaction.options.getString("message");
+    console.log(user.username, number, spamMessage);
+    await interaction.reply(await spam(user, spamMessage));
+    if (number <= 5 && user && spamMessage && number) {
       for (let i = 0; i < number; i++) {
-        await interaction.followUp(await spam(user));
+        await interaction.followUp(await spam(user, spamMessage));
       }
     } else {
-      await interaction.followUp(`Please enter a number between 0 and 20`);
+      await interaction.followUp(
+        `Error, There's a limit of 5 messages or something is missing.`
+      );
     }
   },
 };
 
 // Language: javascript
-async function spam(user) {
-  if (user) {
-    return `Hehe Get Spammed ${user}`;
+async function spam(user, message) {
+  if (user && message) {
+    return `${user}, ${message}`;
   } else {
     return "You didn't add any user to spam ;-;";
   }
