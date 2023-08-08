@@ -1,4 +1,3 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { loadAllCommands, allCommands } = require("./src/helper/loadCommand.js");

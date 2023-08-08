@@ -1,11 +1,9 @@
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-const path = require("path");
-const fs = require("fs");
 const { loadAllCommands, allCommands } = require("./src/helper/loadCommand.js");
 require("dotenv").config();
 
-// test Deploy
+// Creating a new property in the client object to store all the commands
 client.commands = new Collection();
 
 const token = process.env.token;
@@ -44,11 +42,12 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
+// error handling
+// restart app on crash
 process.on("uncaughtException", (err) => {
   console.log(err);
 });
 
-// restart app on crash
 process.on("unhandledRejection", (err) => {
   console.log(err);
 });
