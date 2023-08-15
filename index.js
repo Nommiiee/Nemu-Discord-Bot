@@ -17,10 +17,10 @@ the second argument is a boolean that tells the function whether
 it's is being used for loading commands or registering commands
 
 */
-loadAllCommands("../commands", false);
-
-allCommands.forEach((item) => {
-  client.commands.set(item.data.name, item);
+loadAllCommands("../commands", false).then(() => {
+  allCommands.forEach((item) => {
+    client.commands.set(item.data.name, item);
+  });
 });
 
 client.once("ready", () => {
@@ -55,3 +55,44 @@ process.on("unhandledRejection", (err) => {
 client.login(token).then(() => {
   client.user.setActivity("You Darling", { type: "WATCHING" });
 });
+
+const express = require("express");
+const { set } = require("mongoose");
+const app = express();
+
+app.listen(3001, () => {
+  console.log("Server is running on port 3000");
+});
+
+app.get("/", async (req, res, next) => {
+  try {
+    res.json({ message: "Hello Darling" });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error });
+  }
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
+process.on("uncaughtException", (err) => {
+  console.log(err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log(err);
+});
+
+setInterval(() => {
+  const URL = "https://nemu.cyclic.app/";
+  ping(URL);
+}, 1000 * 60 * 60);
+
+async function ping(URL) {
+  const response = await fetch(URL);
+  const data = await response.json();
+  console.log(data);
+}

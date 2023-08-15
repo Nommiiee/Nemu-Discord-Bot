@@ -11,12 +11,14 @@ the second argument is a boolean that tells the function whether
 it's is being used for loading commands or registering commands
 
 */
-loadAllCommands("../commands", true);
-
-const rest = new REST({ version: "10" }).setToken(process.env.token);
-rest
-  .put(Routes.applicationCommands(process.env.clientId), {
-    body: allCommands,
+loadAllCommands("../commands", true)
+  .then(() => {
+    const rest = new REST({ version: "10" }).setToken(process.env.token);
+    rest
+      .put(Routes.applicationCommands(process.env.clientId), {
+        body: allCommands,
+      })
+      .then(() => console.log("Successfully registered application commands."))
+      .catch(console.error);
   })
-  .then(() => console.log("Successfully registered application commands."))
   .catch(console.error);

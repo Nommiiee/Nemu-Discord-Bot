@@ -3,7 +3,7 @@ const fs = require("fs");
 const allCommands = [];
 
 // Helper Functions For Command Loading
-function loadAllCommands(directoryPath, loadingCommand) {
+async function loadAllCommands(directoryPath, loadingCommand) {
   const commandPath = path.join(__dirname, directoryPath);
 
   const commandFiles = fs.readdirSync(commandPath);

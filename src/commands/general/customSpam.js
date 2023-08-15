@@ -20,17 +20,23 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
-    const user = interaction.options.getMentionable("target");
-    const message = interaction.options.getString("message");
-    const number = interaction.options.getInteger("amount") || 5;
-    await interaction.reply(await spam(user, message));
-    if (number < 21) {
-      for (let i = 0; i < number - 1; i++) {
-        await interaction.followUp(await spam(user, message));
+    if (interaction.member.permissions.has("ADMINISTRATOR")) {
+      const user = interaction.options.getMentionable("target");
+      const message = interaction.options.getString("message");
+      const number = interaction.options.getInteger("amount") || 5;
+      await interaction.reply(await spam(user, message));
+      if (number < 21) {
+        for (let i = 0; i < number - 1; i++) {
+          await interaction.followUp(await spam(user, message));
+        }
+      } else {
+        await interaction.followUp(
+          (await spam(user, message)) + "Please enter number less than 20"
+        );
       }
     } else {
-      await interaction.followUp(
-        (await spam(user, message)) + "Please enter number less than 20"
+      await interaction.reply(
+        "You don't have permission to use this command, admin only"
       );
     }
   },

@@ -20,19 +20,22 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
-    const user = interaction.options.getUser("target");
-    const number = interaction.options.getInteger("amount") || 1;
-    const spamMessage = interaction.options.getString("message");
-    console.log(user.username, number, spamMessage);
-    await interaction.reply(await spam(user, spamMessage));
-    if (number <= 5 && user && spamMessage && number) {
-      for (let i = 0; i < number; i++) {
-        await interaction.followUp(await spam(user, spamMessage));
+    if (interaction.member.permissions.has("MANAGE_MESSAGES")) {
+      const user = interaction.options.getUser("target");
+      const number = interaction.options.getInteger("amount") || 1;
+      const spamMessage = interaction.options.getString("message");
+      await interaction.reply(await spam(user, spamMessage));
+      if (number <= 5 && user && spamMessage && number) {
+        for (let i = 0; i < number; i++) {
+          await interaction.followUp(await spam(user, spamMessage));
+        }
+      } else {
+        await interaction.followUp(
+          `Error, There's a limit of 5 messages or something is missing.`
+        );
       }
     } else {
-      await interaction.followUp(
-        `Error, There's a limit of 5 messages or something is missing.`
-      );
+      await interaction.reply("You don't have permission to use this command.");
     }
   },
 };
