@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {

@@ -57,7 +57,6 @@ client.login(token).then(() => {
 });
 
 const express = require("express");
-const { set } = require("mongoose");
 const app = express();
 
 app.listen(3001, () => {
